@@ -1,6 +1,6 @@
 # Compiler & flags
 CC = clang
-CFLAGS = -Wall -Iinclude -std=c11
+CFLAGS = -Wall -Wextra -Iinclude -std=c11 -D_POSIX_C_SOURCE=200112L
 
 # OS-specific
 ifeq ($(OS),Windows_NT)
@@ -20,6 +20,7 @@ TARGET_BUFFER = test_buffer$(EXEEXT)
 # Source files
 SRC_MAIN = src/main.c src/pageio.c
 SRC_BUFFER = src/test_buffer.c src/pageio.c src/buffer.c
+OBJ_MAIN = src/main.o src/pageio.o src/buffer.o src/btree.o src/parser.o
 
 # Object files
 OBJ_MAIN = $(SRC_MAIN:.c=.o)
@@ -52,4 +53,5 @@ run_buffer: $(TARGET_BUFFER)
 
 # Clean
 clean:
-	$(RM) $(OBJ_MAIN) $(OBJ_BUFFER) $(TARGET_MAIN) $(TARGET_BUFFER)
+	rm -f src/*.o minidb.exe test_buffer.exe
+
